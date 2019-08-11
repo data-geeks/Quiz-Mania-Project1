@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Adhoc Quizmania</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+  <!-- Bootstrap css -->
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/modal-video/css/modal-video.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <script type="text/javascript">                                                                                                                                 
+    function accessCookie(cookieName)                                                                                                                       
+    {                                                                                                                                                       
+    var name = cookieName + "=";                                                                                                                            
+    var allCookieArray = document.cookie.split(';');                                                                                                        
+    for(var i=0; i<allCookieArray.length; i++)                                                                                                              
+    {                                                                                                                                                       
+            var temp = allCookieArray[i].trim();                                                                                                            
+            if (temp.indexOf(name)==0)                                                                                                                      
+            return temp.substring(name.length,temp.length);                                                                                                 
+            }                                                                                                                                               
+            return "";                                                                                                                                      
+    }                                                                                                                                                       
+    function checkCookie()                                                                                                                                  
+    {                                                                                                                                                       
+    var user = accessCookie("User_Id");                                                                                                                     
+    if (user=="")
+      {	 
+        document.getElementById("menu1").innerHTML = "Login";
+        document.getElementById("menu1").setAttribute("onclick", "window.location.href='/login-register';"); 
+      }		
+    else
+      {
+        document.getElementById("menu1").innerHTML = "Logout";
+        document.getElementById("menu1").setAttribute("onclick", "deleteCookie1()");
+        
+        
+      }
+   }
+    function setuser()
+    {
+      var elements = document.getElementsByClassName("userID");
+      var names = '';
+      for(var i=0; i<elements.length; i++) {
+        elements[i].setAttribute("value",accessCookie("User_Id"));
+        }
+    }                                                                                                                                                       
+
+    function deleteCookie1()  
+{   var Cookies=document.cookie.split(';');
+    for (var i=1; i <=Cookies.length; i++)
+    {
+    document.cookie=Cookies[i-1] +"= ; expires=Thu, 02 Aug 2018 00:00:00 UTC;path=/;";  
+    }
+    window.location = "/"; // TO REFRESH THE PAGE       
+}     
+</script>                              
+                                                                                                                                                                   
+</head>
+
+<body>
+
+  <header id="header" class="header header-hide">
+<div class="container">
+
+      <div id="logo" class="pull-left">
+                                <h1><a href="#body" class="scrollto"><span>QUIZ</span>MANIA</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+                                <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+                                <div class="dropdown pull-right">
+                                        <button onclick="deleteCookie1()"  class="btn btn-info" type="button" id="menu1" >Login</button>
+                                        
+                                </div>
+				<script>
+                                checkCookie();
+                                </script>
+      </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Hero Section
+  ============================-->
+  <section id="hero" class="wow fadeIn">
+    <div class="hero-container">
+      <h1>Welcome to Quiz Mania</h1>
+      <h2></h2>
+      <img src="img/hero-img.png" alt="Hero Imgs">
+      <a href="#features" class="btn-get-started scrollto">Get Started</a>
+      <div class="btns">
+
+      </div>
+    </div>
+  </section><!-- #hero -->
+
+
+  <!--==========================
+    Features Section
+  ============================-->
+
+  <section id="features" class="padd-section text-center wow fadeInUp">
+
+    <div class="container">
+      <div class="section-title text-center">
+        <h2>Quiz Board</h2>
+        <p class="separator">choose the technology below</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        
+       <div class="col-md-6 col-lg-3">
+          <form action="/cgi-bin/testpage" method="post">
+            <input type="hidden" class ="userID" name="userid" value="">
+            <input type="hidden" name="testid" value="1">
+            <button type="submit" style="background-color: transparent; color: white;">
+          <div class="feature-block" >
+            <img src="img/docker.svg" alt="img" class="img-fluid">
+            
+            <h4>Demo</h4>
+            <p>This is the demo test, This page will explain whats going on</p>
+          </div>
+        </button>
+        </div>
+      </form>
+      
+
+
+        <div class="col-md-6 col-lg-3">
+            <form action="/cgi-bin/testpage" method="post">
+              <input type="hidden" class ="userID" name="userid" value="">
+              <input type="hidden" name="testid" value="2">
+              <button type="submit" style="background-color: transparent; color: white;">
+            <div class="feature-block" >
+              <img src="img/AWS.jpg" alt="img" class="img-fluid">
+              
+              <h4>EC-2</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+            </div>
+          </button>
+          </div>
+        </form>
+        
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/redhat.jpg" height="90" width="85">
+
+            <h4>Redhat</h4>
+
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/python.jpeg" alt="img" class="img-fluid">
+            <h4>Python</h4>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/tensorflow.jpeg" alt="img" class="img-fluid">
+            <h4>Tensorflow</h4>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/computer_vision.jpeg" alt="img" class="img-fluid">
+            <h4>Computer Vision</h4>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/kubernetes.png" alt="img" class="img-fluid">
+            <h4>Kubernetes</h4>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-block">
+            <img src="img/svg/code.svg" alt="img" class="img-fluid">
+            <h4>Scikit learn</h4>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  
+  <script>
+      setuser();
+  </script>
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/modal-video/js/modal-video.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <!-- Contact Form JavaScript File -->
+  <script src="contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+# Test File of Elastic Cloud Computing
+
+
+1)  How can we protect accidental termination of our instances?
+i. By using security group and disabling remote access to instances.
+ii. By using "Enable termination protection" option.
+iii. By using "change shutdown behavior" option. 
+iv. We can not prevent accidental termination.
+
+Ans. ii
+       2) How can we attach our instance store volume to another instance?
+        i. We can use "force detach" and then attach to another instance.
+        ii. We can use "detach volume" and then attach  to another instance.
+        iii. We can not detach instance or attach instance store volume.
+        iv. We can stop the instance. Dech the volume and attach to other instance
+
+Ans. iii
+       3) Is it possible to create an AMI while an instance is running?
+        i. Yes, if only "no reboot" option is checked.
+        ii. Yes, only if it is Linux instance
+        iii. No, instance should be stopped and rebooted
+        iv. Yes, AMI can be created without any change
+Ans. i
+
+         4) Is it possible to change an instance type after it has been created?
+        i. Instance type can not be changed.
+        ii. Type can be changed if it has an EBS store volume root device
+        iii. Type can be changed if it has an instance store volume root device 
+        iv. This question doesn't make sense
+Ans. ii
+
+
+        5) If any change is made to a security group rule, when are these changes effective?
+        i. Changes are automatically applied after a short period
+        ii. Changes will be effective after rebooting the instances in that security group 
+        iii. Security group rules can not be changed. You have to create a new security group and assign it to instances
+        iv. Changes will be effective after 5 minutes
+ Ans. i
+
+        6) How can an instance be copied to another region?
+        i. By stopping instance and using copy option
+        ii. There is no way to copy an instance to another region
+        iii. First instance's root volume is detached. Then a new instance is created in another region. Finally detached volume can be attached to new instance as root device
+        iv. By creating an AMI and copy it to another region
+Ans. iv
+
+
+                7) How can you change the instance type used in Auto Scaling group?
+        i. As group should be deleted and recreated 
+        ii. Instances should be stopped and then type can be changed
+        iii. A new launch configuration with a new instance type should be created and attached to AS group 
+        Iv. It is  not possible to change the instance type 
+Ans. iii
+
+
+        8) which record type queries are free when using Route 53?
+        i. AAAA
+        ii. MX 
+        iii. Alias
+        iv. TXT
+Ans. iii
+
+
+        9) What    three    attributes    are    selectable    when creating    an    EBS    volume    for    an    EC2    instance?
+        i. Volume type 
+        ii. IOPS
+        iii. Region
+        iv. CMK(customer master key)
+        v. ELB
+        vi. EIP
+Ans. i,ii,iv
+
+
+10)What    is    EC2    instance    protection?
+i.     prevents    Auto    Scaling    from    selecting    specific    EC2    instance    for termination    when    scaling    out
+ii.     prevents    Auto    Scaling    from    selecting    specific    EC2    instance    for termination    when    scaling    in
+iii.    prevents    Auto    Scaling    from    selecting    specific    EC2    instance    for termination    when    paused
+iv.    prevents    Auto    Scaling    from    selecting    specific    EC2    instance    for termination    when    stopped
+Ans. ii
+
+
+11) What    are    three    standard    AWS    pricing    models?
+i.     elastic
+ii.     spot
+iii.     reserved
+vi.     dynamic
+            v.     demand
+Ans. ii,iii,v
+
+
+        12) How    is    an    EBS    root    volume    created    when    launching    an    EC2    instance    from    a new    EBS-backed    AMI?
+        i.     S3    template
+ii.     original    AMI
+iii.     snapshot
+            iv.     instance    store
+Ans. iii
+
+
+
+13)What    Amazon    AWS    sources    are    available    for    creating    an    EBS-Backed    Linux AMI?    (select    two)
+        i.     EC2    instance
+            ii.     Amazon    SMS    
+iii.     VM    Import/Export
+iv.     EBS    Snapshot    
+v.     S3    bucket
+Ans. i,iv
+
+
+        14) What    is    required    to    prevent    an    instance    from    being    launched    and    incurring    costs?
+i.     stop    instance
+ii.     terminate    instance
+iii.     terminate    AMI    and    de-register    instance
+iv.     stop    and    de-register    instance
+v.     stop,    deregister    AMI    and    terminate    instance
+Ans. v
+
+
+        15) What    is    an    EBS    Snapshot?
+            i.     backup    of    an    EBS    root    volume    and    instance    data
+ii.     backup    of    an    EC2    instance
+iii.     backup    of    configuration    settings
+iv.     backup    of    instance    store
+Ans. i 
+
+
+        16) Where    are    ELB    and    Auto-Scaling    groups    deployed    as    a    unified    solution    for horizontal    scaling?
+i.     database    instances
+ii.     all    instances
+iii.     web    server    instances
+ iv.     default    VPC    only
+Ans. iii
+
+
+        17) What    feature    is    supported    when    attaching    or    detaching    an    EBS volume    from    an    EC2    instance?
+i.     EBS    volume    can    be    attached    and    detached    to    an    EC2    instance    in    the same    region
+ii.     EBS    volume    can    be    attached    and    detached    to    an    EC2    instance    that    is cross-region
+iii.     EBS    volume    can    only    be    copied    and    attached    to    an    EC2    instance    that    is cross-region
+iv.     EBS    volume    can    only    be    attached    and    detached    to    an    EC2    instance    in    the same    Availability    Zone
+Ans. iv
+
+        18)What    two    statements    correctly    describe    how    to    add    or    modify    IAM    roles    to    a running    EC2    instance?
+i.     attach    an    IAM    role    to    an    existing    EC2    instance    from    the    EC2    console
+ii.     replace    an    IAM    role    attached    to    an    existing    EC2    instance    from    the    EC2 Console
+iii.     attach    an    IAM    role    to    the    user    account    and    relaunch    the    EC2    instance
+iv.     add    the    EC2    instance    to    a    group    where    the    role    is    a    member
+Ans. i,ii
+
+
+        19) What    is    the    default    behavior    for    an    EC2    instance    when terminated?    (Select    two)
+i.     DeleteOnTermination    attribute    cannot    be    modified
+ii.     EBS    root    device    volume    and    additional    attached    volumes    are    deleted Immediately
+iii.     EBS    data    volumes    that    you    attach    at    launch    persist
+iv.     EBS    root    device    volume    is    automatically    deleted    when    instance Terminates
+Ans. iii,iv
+
+
+        20) How do you  launch an EC2 instance after it is terminated? (Select    two)
+i.     launch    a    new    instance    using    the    same    AMI    
+ii.     reboot    instance    from    CLI
+iii.     launch    a    new    instance    from    a    Snapshot
+iv.     reboot    instance    from    management    consol
+v.     contact    AWS    support    to    reset
+Ans. i,iii
+
+
+        21)What will cause AWS to terminate an EC2 instance on launch?    (Select    two)
+i.     security    group    error    
+ii.     number    of    EC2    instances    on    AWS    account    exceeded
+iii.     EBS    volume    limits    exceeded
+iv.     multiple    IP    addresses    assigned    to    instance
+v.     unsupported    instance    type    assigned
+Ans. ii,iii
+
+
+22)You recently made some configuration changes to  an EC2 instance.You then  launched    a    new    EC2    instance    from    the    same    AMI    however none    of    the    settings    were    saved.    What    is    the    cause    of    this    error?
+i.     did    not    save    configuration    changes    to    EC2    instance
+ii.     did    not    save    configuration    changes    to    AMI
+iii.     did    not    create    new    AMI
+iv.     did    not    reboot    EC2    instance    to    enable    changes
+Ans. iii
+
+
+        23) What    statements    are    correct    concerning    DisableApiTermination attribute?    (Select    two)
+i.    cannot    enable    termination    protection    for    Spot    instances
+ii.    termination    protection    is    disabled    by    default    for    an    EC2    instance
+iii.    termination    protection    is    enabled    by    default    for    an    EC2    instance
+iv.    can    enable    termination    protection    for    Spot    instances
+v.    DisableApiTermination attribute supported for EBS-backed instances only
+Ans. i,ii
+
+
+        24) You have developed a web-based application for file sharing that will allow customers    to access files.There are a variety of sizes that include larger .pdf and video files. What two solution stacks could tenants use for an online file sharing service?  (Select    two)
+i.     EC2,    ELB,    Auto-Scaling,    S3
+ii.     Route    53,    Auto-Scaling,    DynamoDB
+iii.     EC2,    Auto-Scaling,    RDS
+iv.     CloudFront
+Ans. i,iv
+
+        25) What infrastructure    services    are    provided    to    EC2    instances?    (Select    three)
+i.     VPN
+ii.     storage
+iii.     compute
+iv.     transport
+v.     security
+vi.     support
+Ans. ii,iii,iv
+
+
+        26) How is capacity (compute,    storage    and    network    speed) managed    and assigned to EC2 instances?
+i.     AMI   
+ii.     instance    type
+iii.     IOPS
+iv.     Auto-Scaling
+Ans. ii
+
+        27)What    storage    type    enable    permanent    attachment    of    volumes    to    EC2    instances?
+i.     S3    
+ii.     RDS 
+iii.     TDS
+iv.     EBS
+Ans. iv
+
+
+        28) What is the recommended method for migrating (copying) an EC2 instance    to    a    different    region?
+i.     terminate instance,select region, copy instance to destination region
+ii.     select  AMI associated with EC2 instance and use Copy AMI option
+iii.     stop instance and copy AMI to destination region
+iv.     cross-region copy is not  currently supported
+Ans. ii
+        
+
+29) What    are    two    attributes    that    define    an    EC2    instance    type?
+i.     vCPU
+ii.     license    type
+iii.     EBS    volume    storage
+iv.     IP    address
+v.     Auto-Scaling
+Ans. i,iii
+
+
+        30) How    is    an    Amazon    Elastic    Load    Balancer    (ELB)    assigned?
+i.     per    EC2    instance
+ii.     per    Auto-Scaling    group
+iii.     per    subnet
+iv.     per    VPC
+Ans. i
+
+
+        31) What    is    the    default    maximum    number    of    Elastic    IP    addresses    assignable    per Amazon    AWS    region?
+i.     1
+ii.     100
+iii.     5
+iv.     unlimited
+Ans. iii
+
+
+        32) How    are    snapshots    for    an    EBS    volume    created    when    it    is    the    root    device    for    an instance?
+i.     pause    instance,    unmount    volume    and    snapshot
+ii.     terminate    instance    and    snapshot
+iii.     unencrypt    volume    and    snapshot    dynamically
+iv.     stop    instance,    unmount    volume    and    snapshot
+Ans. iv
+
+
+        33) What    cloud    compute    components    are    configured    by    tenants    and    not    Amazon AWS    support    engineers?    (Select    three)
+    
+i.     hypervisor
+ii.     upstream    physical    switch
+iii.     virtual    appliances
+iv.     guest    operating    system
+v.     RDS 
+vi.     applications    and    databases
+Ans. iii,iv,vi
+
+
+34)What    three    characteristics    or    limitations    differentiate    EC2    instance    types?
+i.     VPC    only
+ii.     application    type
+iii.     EBS    volume    only
+iv.     virtualization    type
+v.     AWS    service    selected
+Ans. i,iii,iv
+

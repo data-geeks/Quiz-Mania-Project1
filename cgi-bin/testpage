@@ -1,0 +1,468 @@
+#!/usr/bin/python3
+
+import cgi
+import mysql.connector as mysql
+
+#Magic Line
+print("Content-type: text/html\r\n\r\n")
+
+bodyupper='''
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- Title Page -->
+	<title>QuizPage</title>
+
+	<link href="/img/favicon.png" rel="icon">
+    <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+	<!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Required CSS -->
+	<link rel="stylesheet" type="text/css" href="/Question-page_files/semantic.css">
+	<link href="/Question-page_files/bootstrap_002.css" rel="stylesheet">
+	<link href="/Question-page_files/style.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/Question-page_files/bootstrap.css">
+  <script src="/Question-page_files/jquery.js"></script>
+	<script src="/Question-page_files/bootstrap.js"></script>
+	
+<!-- Custom CSS -->
+	<style type="text/css">
+		.ui.main.container {
+			margin-top: 4em;
+      
+
+		}
+		.ui.card {width: 100%;border-radius: 0;
+    }
+	</style>
+		<style type="text/css">
+	.card-list-soal .ui.button { margin-bottom: 10px;  }
+	.card-list-soal {
+		position: fixed;
+		top: 8%;
+		height: auto;
+		right: 0;
+		max-width: 260px;
+		background: white;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		overflow-y:hidden;
+    color:cornflowerblue !important;
+	}
+	.card-list-soal .soal {
+		padding-top: 10px;
+		height: auto;
+		max-height: 50vh;
+		overflow-y: scroll;
+    
+	}
+	.button-list-soal {
+		position: fixed;
+		top: 30%;
+		right: 0;
+		padding: 50px;
+		background:cornflowerblue;
+		color: white;
+		text-align: right;
+		cursor: pointer;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		font-size: 0.9em;
+    
+	}
+	.ui.label { border-radius: 0; }
+	.ui.form.opsi { margin-top: 20px; }
+	.opsi { margin-bottom: 15px;position: relative; }
+	.opsi input[type="radio"] {
+	    display:none;
+	}
+	.opsi label.abjad {
+		font-size: 0.8em;
+	    display: inline-block;
+	    border: 1px solid #2185d0;
+	    border-radius: 50%;
+		height: auto;
+	    padding: 3px 8px;
+		float: left;
+		margin-right: 10px;
+    
+	}
+	.opsi label.abjad:hover { background: #2185d0;cursor: pointer; }
+	.opsi label.abjad:hover + .opsi { background: #2185d0;cursor: pointer; }
+	.opsi input[type="radio"]:checked + label.abjad {
+		background:#2185d0 !important;
+		color:#2185d0 !important;
+	}
+	.opsi label.isi {
+		display: block;
+		width: 90%;
+		margin-left: 35px;
+		padding-top: 5px;
+    
+	}
+      .description{
+		padding-left: 30px;
+        
+	}
+      .header{
+
+        
+        padding-top:11px !important;
+      }
+      .nav-soal{
+        padding-bottom:17px !important
+      }
+
+		.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 11px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}  
+				
+			
+	</style>
+	<script type="text/javascript">
+                function accessCookie(cookieName)
+                {
+                var name = cookieName + "=";
+                var allCookieArray = document.cookie.split(';');
+                for(var i=0; i<allCookieArray.length; i++)
+                {
+                        var temp = allCookieArray[i].trim();
+                        if (temp.indexOf(name)==0)
+                        return temp.substring(name.length,temp.length);
+                        }
+                        return "";
+                }
+                function checkCookie()
+                {
+                var user = accessCookie("User_Id");
+                if (user=="")
+                window.location="/login-register";
+                }
+        </script>	
+</head>
+<body onload="checkCookie()">
+'''
+#first lets check that is even the user logedin 
+
+print(bodyupper)
+
+form = cgi.FieldStorage()
+user_id =form.getvalue('userid')
+test_id =form.getvalue('testid')
+
+if user_id==None or test_id==None:
+	print('<script>document.body.style.backgroundColor = "#000000";</script>')
+	print('<center><img src="/img/giphy.gif"></img>')
+	print('<h1><font color="#03fca9" face="verdana">Invalid Inputs</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /" />')
+	print("</center></body></html>")
+	exit(0)
+	
+#now the user is logedin then letus check if the userid and testid exist in database
+#Database data
+username='root'
+password='vijay'
+database_name='project1'
+host='localhost'
+
+# Now connecting the Database
+conn=mysql.connect(user=username,password=password,database=database_name,host=host)
+
+# Now generating a SQL language cursor 
+cur = conn.cursor()
+
+# get value from form
+
+cur.execute("Select * from userInfo where user_id ="+user_id)
+userdata=cur.fetchone()
+cur.execute("Select * from testInfo where test_id ="+test_id)
+testdata=cur.fetchone()
+
+#Now lets check if the user or test even exits
+if len(userdata)==0 or len(testdata)==0:
+	print('<script>document.body.style.backgroundColor = "#000000";</script>')
+	print('<center><img src="/img/giphy.gif"></img>')
+	print('<h1><font color="#03fca9" face="verdana">User data or Test data Incorrect</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /" />')
+	print("</center></body></html>")
+	exit(0)
+
+
+# Updating  the userscore to 0 of this test in database as he is taking the test again
+cur.execute('Select * from userScore where test_id=%s and user_id=%s'%(test_id,user_id))
+previous=cur.fetchone()
+if previous==None:
+	sql='INSERT INTO userScore (user_id, test_id, score) VALUES (%s, %s, %s)'
+	val=(user_id,test_id,'0')
+	cur.execute(sql,val)
+	conn.commit()
+	conn.close()
+else:
+	cur.execute('Update userScore set score=0 where user_id=%s and test_id=%s'%(user_id,test_id))
+	conn.commit()
+	conn.close()
+
+#Mysql connectivity is not required now
+
+
+
+# Now everything is valid now lets start printing the questions and options
+
+bodymid='''
+  <header id="header" class="header header-hide cust">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+				<h1><a href="#body" class="scrollto"><span>QUIZ</span>MANIA</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+				<!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+				<div class="dropdown pull-right">
+					<button class="btn btn-default dropdown-toggle" type="button" id="menu1">Hi There %s</button>
+				</div>		
+				
+      </div>
+  </header><!-- #header -->
+
+		
+	<br>
+	<br>
+	<br>
+	<!-- Page Content -->
+			<div style="text-align:center">
+				<h2><span class="label label-success">Test Name : %s</span></h2>
+			</div>
+		<div class="ui dimmer page" style="z-index: 103;">
+		<div class="ui text loader" style="margin-top: 250px;">Loading</div>
+	</div>
+	<div class="ui main container">
+		<form class="ui form opsi" method="post" action="/cgi-bin/check">
+'''
+print(bodymid%(userdata[1],testdata[1]))
+
+#opening test document
+
+paper=open("tests/"+testdata[2],'r', encoding="utf8")
+
+#now printing questions 
+
+ques='''
+<div class="ui card">
+			<div class="content">
+				<div class="ui header">
+				Questions : <span data-position="bottom right" data-tooltip="Nomor Soal Saat Ini" class="ui blue label">%d</span>
+
+					<div style="float: right;">
+
+							<div class="menu">
+
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="ui divider"></div>
+			
+				<div class="description" padding-left="30;">
+                <p>%s</p>
+'''
+
+option_print='''
+
+	 	<label class="container"  >%s
+  		<input type="checkbox"  name="%s" id="%s" value="%s">
+  		<span class="checkmark"></span>
+		</label>
+'''
+i=1
+option=0
+
+for line in paper:
+	if len(line.split())<=0 or "#"==line[0] :
+		continue
+	else:
+		line=line.strip()
+
+	if option:
+		if '.' not in line or len(line.split('.'))<2:
+			print("There is some error in this test page, Please notify admin about it.")
+			exit(3)
+				
+		if line.split('.')[0]=='Ans':
+			print("</div></div>")
+			i+=1
+			option=0
+			continue
+		
+		else:
+			value=line.split('.')[0]
+			opt=line.split('.')[1]
+			ide=chr(97+option -1)+str(i)
+			print(option_print%(opt,"ques"+str(i),ide,value))
+			option+=1
+			continue
+	
+	check=str(i)+")"
+
+	if check==line[:len(check)]:
+		question=line[len(check):]
+		print(ques%(i,question))
+		option=1
+		continue
+	else:
+		print("</br>"+line+"</br>")
+		print("There is some error in this test page, Please notify admin aout it.")
+		exit(2)
+
+#No need of testfile anymore
+paper.close()
+
+#submit button and hidden input are remaining
+print('<input type="hidden" name="testid" value="%s">'%(test_id))
+print('<input type="hidden" name="userid" value="%s">'%(user_id))
+print('<input type="hidden" name="questions" value="%s">'%(str(i)))  
+# this will be used to determine score per question
+
+button='''
+<div class="nav-soal center aligned">
+						<center>
+						<button class="btn btn-success " type="submit">
+						  <i class="chevron right icon"></i>
+						  Submit
+						</button>
+						</center>
+						
+					</div>
+
+'''
+
+print(button)
+
+# now rest of the page 
+bodybottom='''
+</form>
+		</div>
+	
+
+
+	<!-- Page Footer -->
+
+	<!-- Required JavaScript -->
+	<script src="Question-page_files/jquery-3.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="Question-page_files/semantic.js"></script>
+	
+	<!-- Custom JavaScript -->
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('.ui.dropdown').dropdown();
+		$('.message .close').on('click', function() {
+		    $(this).closest('.message').transition('fade');
+		});
+	});
+	</script>
+		<script type="text/javascript">
+	$(document).ready(function(){
+		$('.ui.dimmer.page').removeClass('active');
+
+		var intervalAnim = 700;
+		$('#close-list-soal').click(function(){
+			$('.card-list-soal').fadeOut(intervalAnim);
+			$('.button-list-soal').fadeIn(intervalAnim);
+		});	
+		$('.button-list-soal').click(function(){
+			$('.card-list-soal').fadeIn(intervalAnim);
+			$('.button-list-soal').fadeOut(intervalAnim);
+		});
+
+		$('#btn-ragu').click(function(){
+			if ( $('#checkbox-ragu').attr('checked') ) {
+				$('#checkbox-ragu').removeAttr('checked');
+			} else {
+				$('#checkbox-ragu').attr('checked', '');
+			}
+		});
+
+		$(window).scroll(function() {
+		  if( $(document).scrollTop() > $('.navbar').height() ) {
+		    $('#waktu-nav').css({'display':'flex'});
+		  } else {
+				$('#waktu-nav').css({'display':'none'});
+		  }
+		});
+
+	});
+	</script>
+
+
+</body></html>
+'''
+
+print(bodybottom)
+

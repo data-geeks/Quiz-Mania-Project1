@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+import mysql.connector as mysql
+import cgi
+
+#RDS information
+username='root'
+password='vijay'
+database_name='project1'
+host='localhost'
+
+#The Magic line 
+print("Content-type: text/html\r\n\r\n")
+print('''
+<!DOCTYPE html><html>
+<head><title>Register</title>
+<link href="/img/favicon.png" rel="icon">
+<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+</head>
+''')
+# The Background
+print('<body bgcolor="#000000"><center><img src="/img/giphy.gif"></img>')
+
+# Now connecting the Database
+conn=mysql.connect(user=username,password=password,database=database_name,host=host)
+
+# Now generating a SQL language cursor 
+cur = conn.cursor()
+
+# gat value from form
+form = cgi.FieldStorage()
+first_name = form.getvalue('firstname')
+last_name = form.getvalue('lastname')
+user_email =form.getvalue('email')
+mobile =form.getvalue('phone')
+user_password = form.getvalue('password')
+
+if first_name==None or last_name==None or user_email==None or mobile==None or user_password==None:
+	print('<h1><font color="#03fca9" face="verdana">Invalid Inputs</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /login-register" />')
+	print("</center></body></html>")
+	exit(0)
+
+
+#let's check if user is already register
+cur.execute("select user_email from userInfo where user_email='"+user_email+"'")
+ch=[i for i in cur]
+if len(ch)==1:
+	print('<h1><font color="#03fca9" face="verdana">Already Register email</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /login-register" />')
+	print("</center></body></html>")
+	exit(0)
+
+# insert
+sql = "INSERT INTO userInfo (user_first_name, user_last_name, user_email, user_phone, user_password) VALUES (%s, %s, %s, %s, %s)"
+val = (first_name,last_name,user_email,mobile,user_password)
+
+cur.execute(sql, val)
+
+conn.commit()    
+# closing connection
+conn.close()
+
+print('<h1><font color="#03fca9" face="verdana">Registration Succesfull,Now you can login</font></h1>')
+print('<meta http-equiv = "refresh" content = "3; url = /login-register" />')
+print("</center></body></html>")
