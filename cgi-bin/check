@@ -1,0 +1,196 @@
+#!/usr/bin/python3
+
+import cgi
+import mysql.connector as mysql
+
+#Magic Line
+print("Content-type: text/html\r\n\r\n")
+
+bodyupper='''
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>QuizMania</title>
+  <link rel="stylesheet" href="/login-register/auth.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script type="text/javascript">
+    		function accessCookie(cookieName)
+  		{
+    		var name = cookieName + "=";
+    		var allCookieArray = document.cookie.split(';');
+    		for(var i=0; i<allCookieArray.length; i++)
+    		{
+      			var temp = allCookieArray[i].trim();
+      			if (temp.indexOf(name)==0)
+        		return temp.substring(name.length,temp.length);
+    			}
+    			return "";
+  		}
+    		function checkCookie()
+  		{
+  		var user = accessCookie("User_Id");
+  		if (user=="")
+    		window.location="/login-register";
+  		}
+	</script>
+</head >
+
+<body onload="checkCookie()" style="background:#71c55d">
+  
+  <div class="lowin">
+		
+		<div class="lowin-wrapper">
+			<div class="lowin-box lowin-login">
+				<div class="lowin-box-inner">
+          <div class="panel panel-default" style="text-align:center">
+
+'''
+#first lets check that is even the user logedin 
+
+print(bodyupper)
+
+#now the user is logedin then letus check if the userid and testid exist in database
+#Database data
+username='root'
+password='vijay'
+database_name='project1'
+host='localhost'
+
+# Now connecting the Database
+conn=mysql.connect(user=username,password=password,database=database_name,host=host)
+
+# Now generating a SQL language cursor 
+cur = conn.cursor()
+
+# gat value from form
+form = cgi.FieldStorage()
+user_id =form.getvalue('userid')
+test_id =form.getvalue('testid')
+NOQ=form.getvalue('questions')
+
+if user_id==None or test_id==None or NOQ==None:
+	print('<script>document.body.style.backgroundColor = "#000000";</script>')
+	print('<center><img src="/img/giphy.gif"></img>')
+	print('<h1><font color="#03fca9" face="verdana">Invalid Inputs</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /" />')
+	print("</center></body></html>")
+	exit(0)
+
+NOQ=int(NOQ)
+# lets get user and test data from database
+
+cur.execute("Select * from userInfo where user_id ="+user_id)
+userdata=cur.fetchone()
+cur.execute("Select * from testInfo where test_id ="+test_id)
+testdata=cur.fetchone()
+
+#testpaper 
+paper=open("tests/"+testdata[2],'r', encoding="utf8")
+
+#lets set the score 0 
+
+score=0
+#score per question
+NOQ=NOQ-1
+weight=int(int(testdata[3])/NOQ)
+i=1
+option=0 # this variable is used to determine that if we are inside a question, Inside a question means that we have selected a 
+#question and now we are looking for its ans.
+for line in paper:
+	
+	if len(line.split())<=0 or "#"==line[0] : # skiping empty and comment line
+		continue
+	else:
+		line=line.strip()
+
+	if option: # already described above
+		if '.' not in line or len(line.split('.'))<2:
+			print("</br>There is some error in this result page, Please notify admin about it.")
+			exit(3)
+				
+		if line.split('.')[0]=='Ans': # we are looking for a specific line which contain answer
+			ans=line.split('.')[1]
+			got=form.getvalue("ques"+str(i))
+			if got==None:
+				i+=1
+				option=0
+				continue
+			if len(ans.split(','))>1:
+				correct_no=len(ans.split(','))
+				opt_weight=weight/correct_no
+				for op in got :
+					if op in ans.strip().split(','):
+						score+=opt_weight
+				option=0
+				i+=1
+				continue
+			else:
+				if  ans.strip()==got:
+					score+=weight
+				option=0
+				i+=1
+				continue
+		else:
+			continue
+	check=str(i)+")"
+	if check==line[:len(check)]:
+		option=1
+		continue
+	else:
+		print("#There is some error in this result page, Please notify admin aout it.")
+		exit(2)
+
+
+
+#No need of testfile anymore
+paper.close()
+
+#lets round of score
+score=round(score)
+
+# This is the code which display result
+resultdata='''
+<div class="panel-heading"><h2><span class="label label-success">Hi, %s</span></h2></div>
+            
+            <div class="panel-body">
+              
+              <h4> Your Score : <span class="badge"><h5>%d</h5></span></h4>
+            </div>
+            <button type="button" onclick="window.location.href='/';" class="btn btn-primary">Continue</button> 
+            <br>
+            <br>
+          </div>
+			</div>
+
+			
+					
+				</div>
+			</div>
+		</div>
+	
+		<footer class="lowin-footer">
+			
+		</footer>
+	</div>
+
+	
+	
+</body>
+</html>
+'''
+
+
+
+print(resultdata%(userdata[1],score))
+
+# Also updating the user score of this test in database
+sql='Update userScore set score=%s where user_id=%s and test_id=%s'
+val=(str(score),user_id,test_id)
+cur.execute(sql,val)
+conn.commit()
+conn.close()
+
+
+

@@ -1,0 +1,61 @@
+# Format is given below, items in '' are special and need to be there or testpage will give error
+
+
+# i')' question ?  //  here i is a interger starting from 1 and it must be increase with next question
+# a'.' option  // . is important here
+# b'.' option  // as you can see each option has different value before . it can be anything
+#'Ans.' a  // here Ans is case sensetive and this is single correct question here correct option is a 
+#
+# i+1')' question ?
+# i'.'    option  // Here you can see that now options are represent in romans, this will work too
+# ii'.'   option
+# iii'.'  option
+# iv'.' option
+#'Ans.' i,ii,iv // this is a multiple correct option correct options need to be seprated by , and each correct option user select give user certain marks explained in check program 
+# 
+#Below is a example test paper
+#Note :- You should never just copy paste from msoffice or doc format as they contain special symbols which will result in error for eg:- ['“','”','’'] 
+#all these will defintly generate error hust replace them by ['"','"',' ' '] respectively. 
+#
+#Also a question must have options and answer 
+
+
+
+1)  This is just a demo testpage
+i. option1
+ii. Option2 {Correct one}
+iii. Option3 
+iv. Option4
+Ans. ii
+
+2) As you can see each question may have 3,4 or 5 option that depends upon writer only ?
+i. option1
+ii. Option2 
+iii. Option3 {Correct one}
+iv. Option4
+Ans. iii
+
+ 3) Now the format is much more user frinedly but now a little more strict?
+ i. option1 {this one }
+ ii. Option2  
+ iii. Option3 
+ iv. Option4
+Ans. i
+
+ 4) This new format allow multiple correct and also better content management?
+ i. option1
+ ii. Option2 {Correct one}
+ iii. Option3 
+ iv. Option4
+Ans. ii
+
+
+        5) How this work is explained in options below?
+        i. Every test has a maximum score which a user can achive, in this test it is 30
+        ii. Each time a test page is generated question are counted and each of them are given equal weight = Max_Score/no_of_question
+        iii. And in case of  multiple choice question this weight is further divided for no of correct option each correct option. 
+        iv. Just like this question have multiple correct 1,2,4
+        Ans. i,ii,iv
+
+
+ 

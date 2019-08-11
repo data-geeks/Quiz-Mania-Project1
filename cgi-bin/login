@@ -1,0 +1,83 @@
+#!/usr/bin/python3
+import mysql.connector as mysql
+import cgi
+from http import cookies
+# RDS information
+username='root'
+password='vijay'
+database_name='project1'
+host='localhost'
+
+# Now connecting the Database
+conn=mysql.connect(user=username,password=password,database=database_name,host=host)
+
+# Now generating a SQL language cursor 
+cur = conn.cursor()
+
+# gat value from form
+form = cgi.FieldStorage()
+
+user_email =form.getvalue('email')
+user_password = form.getvalue('password')
+
+if user_email==None or user_password==None:
+	print("Content-type: text/html\r\n\r\n") # The Magic line
+	print('''
+	<!DOCTYPE html><html>
+	<head><title>Login</title>
+	<link href="/img/favicon.png" rel="icon">
+	<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	</head>
+	''')
+	print('<!DOCTYPE html><html><body bgcolor="#000000"><center><img src="/img/giphy.gif"></img>')
+	print('<h1><font color="#03fca9" face="verdana">No Input Given</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /login-register" />')
+	print("</center></body></html>")
+	exit(0)
+
+#let's check if password is correct
+cur.execute("select * from userInfo where user_email='"+user_email+"'")
+data=cur.fetchone()
+#user data is incorrect
+if len(data)==0 or data[-1]!=user_password:
+	print("Content-type: text/html\r\n\r\n") # The Magic line
+	print('''
+	<!DOCTYPE html><html>
+	<head><title>Login</title>
+	<link href="/img/favicon.png" rel="icon">
+	<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+	</head>
+	''')
+	print('<!DOCTYPE html><html><body bgcolor="#000000"><center><img src="/img/giphy.gif"></img>')
+	print('<h1><font color="#03fca9" face="verdana">Invalid Credentials</font></h1>')
+	print('<meta http-equiv = "refresh" content = "3; url = /login-register" />')
+	print("</center></body></html>")
+	exit(0)
+
+
+#User exist now lets create cookie and redirect this user to quiz Board webpage
+c=cookies.SimpleCookie()
+c['User_Name']=data[1]+" "+data[2]
+c['User_Name']['path']='/'
+c['Email']=data[3]
+c['Email']['path']='/'
+c['User_Id']=data[0]
+c['User_Id']['path']='/'
+
+print(c)
+
+#print The magic line
+print('Content-type: text/html \r\n\r\n')
+
+#Now Cookies are set and we can use them now 
+print('''
+<!DOCTYPE html><html>
+<head><title>Login</title>
+<link href="/img/favicon.png" rel="icon">
+<link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+</head>
+''')
+print('<!DOCTYPE html><html><body bgcolor="#000000"><center><img src="/img/giphy.gif"></img>')
+print('<h1><font color="#03fca9" face="verdana">Login Succesfull</font></h1>')
+print('<meta http-equiv = "refresh" content = "3; url = /" />')
+print("</center></body></html>")

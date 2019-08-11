@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>QuizMania</title>
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script type="text/javascript">
+    		function accessCookie(cookieName)
+  		{
+    		var name = cookieName + "=";
+    		var allCookieArray = document.cookie.split(';');
+    		for(var i=0; i<allCookieArray.length; i++)
+    		{
+      			var temp = allCookieArray[i].trim();
+      			if (temp.indexOf(name)==0)
+        		return temp.substring(name.length,temp.length);
+    			}
+    			return "";
+  		}
+    		function checkCookie()
+  		{
+  		var user = accessCookie("User_Id");
+  		if (user!="")
+    		window.location="/";
+  		}
+	</script>
+</head >
+
+<body onload="checkCookie()" style="background:#71c55d">
+  
+  <div class="lowin">
+		
+		<div class="lowin-wrapper">
+			<div class="lowin-box lowin-login">
+				<div class="lowin-box-inner">
+          <div class="panel panel-default" style="text-align:center">
+            <div class="panel-heading"><h2><span class="label label-success">Hi, Username</span></h2></div>
+            
+            <div class="panel-body">
+              
+              <h4> Your Score : <span class="badge"><h5>78</h5></span></h4>
+            </div>
+            <button type="button" class="btn btn-primary">Continue</button> 
+            <br>
+            <br>
+          </div>
+			</div>
+
+			
+					
+				</div>
+			</div>
+		</div>
+	
+		<footer class="lowin-footer">
+			
+		</footer>
+	</div>
+
+	
+	
+</body>
+</html>
