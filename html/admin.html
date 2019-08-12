@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Adhoc Quizmania</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
+
+  <!-- Bootstrap css -->
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/modal-video/css/modal-video.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+  
+  <style>
+    
+    input[type="text"]{  
+                text-align: center; 
+            }     
+    .center {
+      
+      margin-left: auto;
+      margin-right: auto;
+      
+    }
+    
+    .image {
+      display: block;
+      width: 30%;
+      height: auto;
+      
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 40%;
+      opacity: 0;
+      transition: .5s ease;
+      background-color: #71c55d;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .container:hover .overlay {
+      opacity: 1;
+    }
+    
+    .text {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    </style>
+
+  <script type="text/javascript">                                                                                                                                 
+    function accessCookie(cookieName)                                                                                                                       
+    {                                                                                                                                                       
+    var name = cookieName + "=";                                                                                                                            
+    var allCookieArray = document.cookie.split(';');                                                                                                        
+    for(var i=0; i<allCookieArray.length; i++)                                                                                                              
+    {                                                                                                                                                       
+            var temp = allCookieArray[i].trim();                                                                                                            
+            if (temp.indexOf(name)==0)                                                                                                                      
+            return temp.substring(name.length,temp.length);                                                                                                 
+            }                                                                                                                                               
+            return "";                                                                                                                                      
+    }                                                                                                                                                       
+    function checkCookie()                                                                                                                                  
+    {                                                                                                                                                       
+    var user = accessCookie("User_Id");                                                                                                                     
+    if (user=="")
+      {	 
+        document.getElementById("menu1").innerHTML = "Login";
+        document.getElementById("menu1").setAttribute("onclick", "window.location.href='/login-register';"); 
+      }		
+    else
+      {
+        document.getElementById("menu1").innerHTML = "Logout";
+        document.getElementById("menu1").setAttribute("onclick", "deleteCookie1()");
+        
+        
+      }
+   }
+    function setuser()
+    {
+      var elements = document.getElementsByClassName("userID");
+      var names = '';
+      for(var i=0; i<elements.length; i++) {
+        elements[i].setAttribute("value",accessCookie("User_Id"));
+        }
+    }                                                                                                                                                       
+
+    function deleteCookie1()  
+{   var Cookies=document.cookie.split(';');
+    for (var i=1; i <=Cookies.length; i++)
+    {
+    document.cookie=Cookies[i-1] +"= ; expires=Thu, 02 Aug 2018 00:00:00 UTC;path=/;";  
+    }
+    window.location = "/"; // TO REFRESH THE PAGE       
+}     
+</script>                   
+<style>
+    
+    .image1 {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    
+    .overlay1 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #008CBA;
+      overflow: hidden;
+      width: 100%;
+      height: 0;
+      transition: .5s ease;
+    }
+    
+    .container:hover .overlay {
+      height: 100%;
+    }
+    
+    .text {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    </style>           
+                                                                                                                                                                   
+</head>
+
+<body>
+
+  <header id="header" class="header header-hide">
+<div class="container">
+
+      <div id="logo" class="pull-left">
+                                <h1><a href="#body" class="scrollto"><span>QUIZ</span>MANIA</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+                                <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
+                                <div class="dropdown pull-right">
+                                        <button onclick="deleteCookie1()"  class="btn btn-info" type="button" id="menu1" >Login</button>
+                                        
+                                </div>
+				<script>
+                                checkCookie();
+                                </script>
+      </div>
+  </header><!-- #header -->
+
+
+  <!--==========================
+    Features Section
+  ============================-->
+
+  <section id="features" class="padd-section text-center wow fadeInUp" style="background:#71c55d">
+
+    <div class="container">
+      <div class="section-title text-center">
+        <h1 style="color: floralwhite">Admin Panel</h1>
+        <p style="color: floralwhite" class="separator">Add or Update the Quizes</p>
+      </div>
+    </div>
+
+    
+      <div class="row">
+        
+      
+        <div class="col-md-6">
+          <div class="container">
+            <img src="img/giphy.gif" alt="img" class="image center">
+            <a href="#get1" onclick="myFunction()"><div class="overlay">
+              <div class="text">Add New Category Quiz</div>
+            </div>
+          </a>
+          </div>  
+        </div>
+      
+      
+        <div class="col-md-6">
+          <div class="container">
+            <img src="img/giphy.gif" alt="img" class="image center">
+            <a href="#get1" onclick="myFunction()"><div class="overlay">
+              <div class="text">Add Existing Category Quiz</div>
+            </div>
+          </a>
+          </div>  
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      
+      <div id="get1" class="col-md-4 center " style="background: #71c55d; display: none">
+        <br> 
+        <br>
+        
+        <form action="#">
+            
+              <input type="text" class="form-control" id="name" placeholder="Test Name" >
+              <input type="text" class="form-control" id="totalscore" placeholder="Total Score">
+              
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile1">
+                    <label class="custom-file-label" for="customFile">Choose Image</label>
+                  </div>
+                  <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile2">
+                      <label class="custom-file-label" for="customFile">Choose Test</label>
+                  </div>
+                  <br>
+                  <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            <br>
+          </form>
+        
+      </div>
+
+  </section>
+
+  
+  <script>
+      setuser();
+      function myFunction() {
+  var x = document.getElementById("get1");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+} 
+  </script>
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery-migrate.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/superfish/hoverIntent.js"></script>
+  <script src="lib/superfish/superfish.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/modal-video/js/modal-video.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/wow/wow.min.js"></script>
+  <!-- Contact Form JavaScript File -->
+  <script src="contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>
